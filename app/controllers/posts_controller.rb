@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
     before_action :authenticate_user!
-    before_action :correct_user, only: [:destroy]
+    #before_action :correct_user, only: [:destroy]
 
     def index
       @posts = Post.all.order(created_at: :desc)
@@ -13,12 +13,11 @@ class PostsController < ApplicationController
     end
     
     def new
-      @post = current_user.new
+      @post = current_user.posts.build(post_params)
     end
     
     def create
-      @post = Post.new(post_params)
-      @post.user_id = current_user.id
+      @post = current_user.posts.build(posts_params)
       if @post.save
         flash[:notice] = "投稿を作成しました"
         redirect_to current_user
@@ -37,7 +36,7 @@ class PostsController < ApplicationController
       @post.user_id = current_user.id
       if @post.save
         flash[:notice] = "投稿を編集しました"
-        redirect_to("/posts/index")
+        redirect_to :index
       else
         render :edit
       end
@@ -47,7 +46,7 @@ class PostsController < ApplicationController
       @post = Post.find(params[:id])
       @post.destroy
       flash[:notice] = "投稿を削除しました"
-      redirect_to("/posts/index")
+      redirect_to current_user
     end
     
     private
