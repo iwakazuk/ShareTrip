@@ -1,0 +1,18 @@
+
+<div class="users-box">
+<div class="flex">
+  <div class="users-box__profile">
+
+  <p class="users-box__profile__user-name">
+  <%= link_to user.name, user %>
+  </p>
+</div>
+  </div>
+  <div class="users-box__posts">
+  <% user.posts.first(4).each do |post| %>
+  <%= link_to(post, class: "users-box__posts__link", remote: true,) do %>
+    <%= image_tag post.images[0].thumb.url, class: "users-box__posts__image" %>
+  <% end %>
+  <% end %>
+  </div>
+</div>

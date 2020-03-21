@@ -1,10 +1,11 @@
-<% @users.each do |user| %>
-    <div class="users-index-item">
-    <div class="user-left">
-        <%= image_tag user.image_name.url, class: "profile-image", size: "100" %>
-    </div>
-    <div class="user-right">
-        <%= link_to user.name, user %>
-    </div>
-    </div>
-<% end %>
+  <h3><%= title %></h3>
+
+  <% if users.present? %>
+    <ul class="user-list" id="user-list">
+      <%= render 'users/pagenate', users: users %>
+    </ul>
+    <%= link_to_next_page users, 'つづきを見る', remote: true, id: 'more_link' unless users.nil? %>
+  <% else %>
+    <h4 class="tac">投稿が見つかりませんでした。</h4>
+  <% end %>
+  
