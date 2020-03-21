@@ -1,38 +1,18 @@
 Rails.application.routes.draw do
   get "/" => "home#top"
   get "about" => "home#about"
-
   devise_for :users, controllers: {
     sessions:      'users/sessions',
     registrations: 'users/registrations'
   }
  
-  devise_scope :user do
-    get "user/:id", :to => "users/registrations#detail"
-    get "signup", :to => "users/registrations#new"
-    get "login", :to => "users/sessions#new"
-    get "logout", :to => "users/sessions#destroy"
+  resources :users, only: %i[index show] do
+    resources :likes, only: %i[index]
   end
-  # post "users/:id/update" => "users#update"
-  # get "users/:id/edit" => "users#edit"
-  # post "users/create" => "users#create"
-  # get "signup" => "users#new"
-  # get "users/index" => "users#index"
-  # get "users/:id" => "users#show"
-  # post "login" => "users#login"
-  # get "logout" => "users#logout"
-  # get "login" => "users#login_form"
-  # get "users/:id/likes" => "users#likes"
 
-  get "posts/index" => "posts#index"
-  get "posts/new" => "posts#new"
-  get "posts/:id" => "posts#show"
-  post "posts/create" => "posts#create"
-  get "posts/:id/edit" => "posts#edit"
-  post "posts/:id/update" => "posts#update"
-  get "posts/:id/destroy" => "posts#destroy"
-
-  get "likes/:post_id/create" => "likes#create"
-  get "likes/:post_id/destroy" => "likes#destroy"
+  resources :posts do
+    resources :likes, only: %i[create destroy]
+    resources :comments, only: %i[create edit update destroy]
+  end
 
 end
