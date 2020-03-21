@@ -1,18 +1,23 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :serch
+  USER_PER = 12
+
   def index
-    @users = User.all
+    @q = User.ransack(params[:q])
+    @users = if params[:q]
+               @q.result(distinct: true).order('created_at DESC').page(params[:page]).per(USER_PER)
+             else
+               User.order('created_at DESC').page(params[:page]).per(USER_PER)
+             end
   end
   
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts.page(params[:page]).per(24)
-    @likes = @user.like_posts.page(params[:page]).per(24)
-  end
-  
-  def likes
-    @user = User.find_by(id: params[:id])
-    @likes = Like.where(user_id: @user.id)
+    @posts = @user.posts.page(params[:page]).per(PER)
+    respond_to do |format|
+      format.html
+      format.js { render 'posts/index' }
+    end
   end
 
   private
@@ -20,5 +25,5 @@ class UsersController < ApplicationController
   def serch
     @q = User.ransack(params[:q])
   end
-  
+
 end
