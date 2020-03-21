@@ -1,0 +1,15 @@
+<div class="comment-list" id="comment_list_<%= comment.id %>">
+    <%= image_tag comment.user.profile_image.url, class: "profile-image",size: "50" %>
+    <div class="comment-list--item">
+        <%= link_to comment.user.name, comment.user, class:"comment-list--item__user-name" %>
+        <span class="comment-list--item__date"><%= created_date(comment) %></span>
+        <span class="comment-list--item__date" id="is_edited_<%= comment.id %>"><%= edited?(comment) %></span>
+        <% if current_user?(comment.user) %>
+            <%= button_to "編集", edit_post_comment_path(id: comment.id, post_id: comment.post.id), method: :get, class: "comment-list--item__edit", id: "button_input", remote: true %>
+            <%= button_to "削除", post_comment_path(id: comment.id, post_id: comment.post.id), method: :delete, class: "comment-list--item__destroy", id: "button_input", remote: true, data: {confirm: "削除しますか？"}  %>
+        <% end %>
+        <span id="comment_edit_area_<%= comment.id %>">
+        <p><%= comment.content %></p>
+        </span>
+    </div>
+</div>
