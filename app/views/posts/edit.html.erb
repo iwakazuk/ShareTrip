@@ -1,18 +1,53 @@
-<div class="main posts-new">
-  <div class="container">
-    <h1 class="form-heading">編集する</h1>
-    <%= form_tag("/posts/#{@post.id}/update") do %>
-      <div class="form">
-        <div class="form-body">
-          <% @post.errors.full_messages.each do |message| %>
-            <div class="form-error">
-              <%= message %>
-            </div>
-          <% end %>
-          <textarea name="content"><%= @post.content %></textarea>
-          <input type="submit" value="保存">
-        </div>
-      </div>
+<div class="box form">
+<h2>編集フォーム</h2>
+<% if @post.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+      <%= @post.errors.count %>
+  </div>
+  <ul class="post-error">
+  <% @post.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+</div>
+<% end %>
+
+<div class="form-box">
+
+<%= form_for(@post, class: "form") do |f| %>
+  <%= f.text_field :title, placeholder: "タイトル" %>
+  
+  <%= f.text_area :content, placeholder: "説明" %>
+
+  <p class="tac">投稿してる写真</p>
+  <div class="edit-image" id="edit-image">
+    <div class="edit-image__btn" id="edit-image-btn">
+      <p class="edit-image__btn__item">写真を最初から編集する</p>
+    </div>
+    <% @post.images.each do |image| %>
+      <%= image_tag image.url, class: "edit-image__preview" %>
     <% end %>
   </div>
+  <div class="edit-image-container" id="edit-image-container">
+    <div class="file-image-con" id="drag-drop-area">
+      <p class="drag-drop-info">ここに画像ファイルをドロップ</p>
+    </div>
+    <p class="tac">または</p>
+    <div class="tac mt1">
+      <label for="file-image" class="file-image__label">
+        写真を選択
+        <%= f.file_field :images, class: "file-image", id: "file-image", multiple: true %>
+      </label>
+    </div>
+    <div id="preview" class="preview">
+      <p class="tac" id="preview-title">プレビュー</p>
+      <div id="preview-inner">
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit "編集を反映する", class: "btn btn-primary" %>
+  </div>
+<% end %>
+</div>
 </div>

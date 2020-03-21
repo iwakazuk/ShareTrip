@@ -1,0 +1,22 @@
+<% if user_signed_in? %>
+    <% if current_user.already_liked?(post) %>
+    <span class="like-form">
+      <%= button_to(post_like_path(post_id: post.id, id: current_user.id),method: :delete, remote: true, class: "like-form__btn") do %>
+        <%=  image_tag 'gooded.svg', class: "good-icon" %>
+      <% end %>
+      <p class="arrow_box">いいねを外す</p>
+    </span>
+    <% else %>
+    <span class="like-form">
+      <%= button_to(post_likes_path(post), remote: true, class: "like-form__btn") do %>
+        <%=  image_tag 'good.svg', class: "good-icon" %>
+      <% end %>
+      <p class="arrow_box">いいね！</p>
+    </span>
+    <% end %>
+<% else %>
+  <span>
+  <%= image_tag 'gooded.svg', class: "good-icon" %>
+  <p class="arrow_box"><%= link_to "いいねするにはログインが必要です。", user_session_path, class: "arrow_box__link" %></p>
+  </span>
+<% end %>

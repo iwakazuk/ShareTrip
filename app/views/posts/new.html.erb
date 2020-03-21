@@ -1,19 +1,31 @@
-<div class="main posts-new">
-  <div class="container">
-    <h1 class="form-heading">投稿する</h1>
-    <%= form_tag("/posts/create") do %>
-      <div class="form">
-        <div class="form-body">
-          <% @post.errors.full_messages.each do |message| %>
-            <div class="form-error">
-              <%= message %>
-            </div>
-          <% end %>
-          
-          <textarea name="content"><%= @post.content %></textarea>
-          <input type="submit" value="投稿">
-        </div>
-      </div>
-    <% end %>
+<div class="box form">
+<h2>投稿フォーム</h2>
+
+<%= render "layouts/error_message", object: @post %>
+
+<div class="form-box">
+
+<%= form_for(@post, class: "form") do |f| %>
+  <%= f.text_field :title, placeholder: "タイトル" %>
+  <%= f.text_area :content, placeholder: "説明" %>
+  <div class="file-image-con" id="drag-drop-area">
+    <p class="drag-drop-info">ここに画像ファイルをドロップ</p>
   </div>
+  <p class="tac">または</p>
+  <div class="tac mt1">
+    <label for="file-image" class="file-image__label">
+      写真を選択
+      <%= f.file_field :images, class: "file-image", id: "file-image", multiple: true %>
+    </label>
+  </div>
+  <div id="preview" class="preview">
+    <p class="tac" id="preview-title">プレビュー</p>
+    <div id="preview-inner">
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit "投稿", class: "btn btn-primary" %>
+  </div>
+<% end %>
+</div>
 </div>
