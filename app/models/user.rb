@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  :recoverable, :rememberable, :validatable
   validates :name, presence: true, length: { maximum: 50 }
   has_many :posts, dependent: :destroy
   # ProfileImageアップローダーを紐付け
@@ -10,18 +10,43 @@ class User < ApplicationRecord
   # like関係
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
+  # rerationship関係
+  has_many :following_relationships, foreign_key: "follower_id", class_name: "Relationship", dependent: :destroy
+  has_many :followings, through: :following_relationships
+  has_many :follower_relationships, foreign_key: "following_id", class_name: "Relationship", dependent: :destroy
+  has_many :followers, through: :follower_relationships
   # comment
   has_many :comments
-  
-  def posts
-    return Post.where(user_id: self.id)
+  # 足跡関係
+  has_many :footprints, dependent: :destroy
+  has_many :footprint_posts, through: :footprints, source: :post
+
+  def following?(other_user)
+  following_relationships.find_by(following_id: other_user.id)
+  end
+
+  def follow!(other_user)
+  following_relationships.create!(following_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+  following_relationships.find_by(following_id: other_user.id).destroy
+  end
+
+  def unfollow!(other_user)
+  following_relationships.find_by(following_id: other_user.id).destroy
   end
 
   def already_liked?(post)
-    likes.exists?(post_id: post.id)
+  likes.exists?(post_id: post.id)
   end
 
   def self.search(search)
-    where(['name LIKE ?', "%#{search}%"])
+  where(['name LIKE ?', "%#{search}%"])
+  end
+
+  #  minimagick
+  def thumbnail
+  variant(resize: '150x150').processed
   end
 end
