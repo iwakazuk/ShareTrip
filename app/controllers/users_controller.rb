@@ -20,6 +20,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def following
+    @user  = User.find(params[:id])
+    @users = @user.followings.page(params[:page]).per(USER_PER)
+    render 'index'
+  end
+
+  def followers
+    @user  = User.find(params[:id])
+    @users = @user.followers.page(params[:page]).per(USER_PER)
+    render 'index'
+  end
+
   private
 
   def serch

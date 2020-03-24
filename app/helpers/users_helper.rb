@@ -4,7 +4,13 @@ module UsersHelper
     end
   
     def user_list_title
-      "ユーザー一覧"
+      if controller.action_name == "index"
+        "ユーザー一覧"
+      elsif controller.action_name == "following"
+        "フォロー中"
+      elsif controller.action_name == "followers"
+        "フォローワー"
+      end
     end
 end
   

@@ -1,6 +1,9 @@
-<div class="user-canopy" >
+<div class="user-canopy" style='background-image: url("<%= user.profile_image.url %>");'>
   <div class="user-box">
+
   <p class="user-name"><%= user.name %></p>
+  <%= render 'users/stats', user: @user %>
+  <%= render 'users/follow_form', user: @user %>
   </div>
 
   <ul class="user-link">
