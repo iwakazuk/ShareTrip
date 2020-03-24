@@ -5,12 +5,17 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  </head>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+    </head>
+  
   <body>
-   <header class = "header">
+  <div class="container">
     <%= render 'layouts/header' %>
-   </header>
-   <%= yield %>
+    <%= yield %>
+  </div>
+    <%= render 'layouts/footer' %>
+    <div id="modal-container"></div>
   </body>
 </html>
