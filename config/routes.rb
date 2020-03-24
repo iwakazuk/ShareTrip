@@ -4,11 +4,14 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  get "/" => "home#top"
+  root "home#index"
   get "about" => "home#about"
  
   resources :users, only: [:index, :show] do
     resources :likes, only: [:index]
+    member do
+      get :following, :followers
+    end
   end
 
   resources :posts do
