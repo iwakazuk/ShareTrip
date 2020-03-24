@@ -33,12 +33,10 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Update" %>
+    <%= f.submit "変更" %>
   </div>
 <% end %>
 
 <p class="tac"><%= button_to "アカウントを削除する", registration_path(resource_name), data: { confirm: "本当に削除しますか？" }, method: :delete, class: "account-delete-btn" %></p>
 <%= link_to "戻る", :back %>
 </div>
-
-<%= javascript_include_tag('user_edit') %>
