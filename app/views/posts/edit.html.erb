@@ -16,8 +16,8 @@
 
 <%= form_for(@post, class: "form") do |f| %>
   <%= f.text_field :title, placeholder: "タイトル" %>
-  
   <%= f.text_area :content, placeholder: "説明" %>
+  <%= f.text_field :tag_list, value: @post.tag_list, class: "form-control", placeholder: "タグ（カンマ区切り）" %>
 
   <p class="tac">投稿してる写真</p>
   <div class="edit-image" id="edit-image">

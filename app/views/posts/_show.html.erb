@@ -33,9 +33,9 @@
               <%= link_to @post.user.name, @post.user %><%= render 'users/follow_form', user: @post.user %>
             </div>
           </div>
-          <div class="post-description">
+          <div class="post-content">
             <span><%= created_date(@post) %></span>
-            <%= simple_format(@post.description) %>
+            <%= simple_format(@post.content) %>
           </div>
           <div class="post-activity">
             <ul class="activity-list">
@@ -57,9 +57,8 @@
                 </span>
               </li>
               <li class="activity-list__item lav">
-                <%= image_tag 'eye.svg', class: "eye-icon" %><%=@post.footprints.count %>
+                <%= image_tag 'eye.svg', class: "eye-icon" %>
                 <ul class="lav-lavel">
-                  <% @post.footprint_users.each do |user| %>
                   <li class="lav-lavel__list">
                     <span>
                       <%= link_to(user, class: "lav-lavel__list--link") do %>
@@ -72,6 +71,14 @@
                 </ul>
               </li>
             </ul>
+          </div>
+          <div class="post-tags">
+            <h4>タグ一覧</h4>
+            <div class="post-tags__con">
+              <% @post.tag_list.each do |tag| %>
+                <%= link_to tag,posts_path(tag_name: tag), class: "post-tags__link" %>
+              <% end %>
+            </div>
           </div>
         </div>
         <div class="post-footer__content">

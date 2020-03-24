@@ -1,31 +1,32 @@
 <div class="box form">
-<h2>投稿フォーム</h2>
+  <h2>投稿フォーム</h2>
 
-<%= render "layouts/error_message", object: @post %>
+  <%= render "layouts/error_message", object: @post %>
 
-<div class="form-box">
+  <div class="form-box">
 
-<%= form_for(@post, class: "form") do |f| %>
-  <%= f.text_field :title, placeholder: "タイトル" %>
-  <%= f.text_area :content, placeholder: "説明" %>
-  <div class="file-image-con" id="drag-drop-area">
-    <p class="drag-drop-info">ここに画像ファイルをドロップ</p>
-  </div>
-  <p class="tac">または</p>
-  <div class="tac mt1">
-    <label for="file-image" class="file-image__label">
-      写真を選択
-      <%= f.file_field :images, class: "file-image", id: "file-image", multiple: true %>
-    </label>
-  </div>
-  <div id="preview" class="preview">
-    <p class="tac" id="preview-title">プレビュー</p>
-    <div id="preview-inner">
+  <%= form_for(@post, class: "form") do |f| %>
+    <%= f.text_field :title, placeholder: "タイトル" %>
+    <%= f.text_area :content, placeholder: "説明" %>
+    <%= f.text_field :tag_list, value: @post.tag_list.join(','), class: "form-control", placeholder: "タグ（カンマ区切り）" %>
+    <div class="file-image-con" id="drag-drop-area">
+      <p class="drag-drop-info">ここに画像ファイルをドロップ</p>
     </div>
+    <p class="tac">または</p>
+    <div class="tac mt1">
+      <label for="file-image" class="file-image__label">
+        写真を選択
+        <%= f.file_field :images, class: "file-image", id: "file-image", multiple: true %>
+      </label>
+    </div>
+    <div id="preview" class="preview">
+      <p class="tac" id="preview-title">プレビュー</p>
+      <div id="preview-inner">
+      </div>
+    </div>
+    <div class="actions">
+      <%= f.submit "投稿", class: "btn btn-primary" %>
+    </div>
+  <% end %>
   </div>
-  <div class="actions">
-    <%= f.submit "投稿", class: "btn btn-primary" %>
-  </div>
-<% end %>
-</div>
 </div>

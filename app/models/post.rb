@@ -10,6 +10,8 @@ class Post < ApplicationRecord
   has_many   :liked_users, through: :likes, source: :user
   # comment
   has_many :comments, dependent: :destroy
+  # tag
+  acts_as_taggable
 
   def self.search(search)
     where(['title LIKE ?', "%#{search}%"])

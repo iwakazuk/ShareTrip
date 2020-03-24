@@ -12,7 +12,11 @@ class PostsController < ApplicationController
                Post.page(params[:page]).per(PER)
              end
   end
-  
+
+  def new
+    @post = current_user.posts.build
+  end
+
   def show
     @post = Post.find(params[:id])
     current_user&.footprints&.create(post_id: @post.id)
@@ -20,56 +24,50 @@ class PostsController < ApplicationController
     @comment = Comment.new
     @comments = @post.comments
   end
-  
-  def new
-    @post = current_user.posts.build
-  end
-  
+
   def create
     @post = current_user.posts.build(posts_params)
     if @post.save
-      flash[:notice] = "投稿を作成しました"
-      redirect_to current_user
+      redirect_to current_user, flash: { success: "投稿しました。" }
     else
       render :new
     end
   end
-  
+
   def edit
     p params[:id]
     @post = Post.find(params[:id])
   end
-  
+
   def update
     @post = Post.find(params[:id])
     if @post.update(posts_params)
-      flash[:notice] = "投稿を編集しました"
       redirect_to root_path
     else
       render :edit
     end
   end
-  
+
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-    flash[:notice] = "投稿を削除しました"
+    flash.now[:success] = "投稿を削除しました。"
   end
-  
+
+
   private
 
   def posts_params
     params.require(:post).permit(
       :title,
       :content,
-    { images: [] }
+      { images: [] },
+      :tag_list
     )
   end
-  
+
   def correct_user
     @post = Post.find(params[:id])
     redirect_to(root_url) unless @post.user == current_user
   end
-
 end
-  
