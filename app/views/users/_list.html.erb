@@ -1,10 +1,10 @@
-  <h3><%= title %></h3>
+  <h3>投稿一覧</h3>
 
-  <% if users.present? %>
+  <% if user.present? %>
     <ul class="user-list" id="user-list">
-      <%= render 'users/pagenate', users: users %>
+      <%= render 'users/pagenate', user: user %>
     </ul>
-    <%= link_to_next_page users, 'つづきを見る', remote: true, id: 'more_link' unless users.nil? %>
+    <%= link_to_next_page user, 'つづきを見る', remote: true, id: 'more_link' unless user.nil? %>
   <% else %>
     <h4 class="tac">投稿が見つかりませんでした。</h4>
   <% end %>

@@ -1,10 +1,13 @@
 class Post < ApplicationRecord
   belongs_to :user
   default_scope -> { order(created_at: :desc) }
-  mount_uploaders :images, ImageUploader
-  validates  :images, presence: true, length: { maximum: 5 }
+  mount_uploaders :image, ImageUploader
+
   validates  :user_id, presence: true
+  validates  :image, presence: { message: 'が選択されていません' }
   validates  :title, presence: true, length: { maximum: 50 }
+  validates :content, length: { maximum: 140 }
+
   # like関係
   has_many   :likes, dependent: :destroy
   has_many   :liked_users, through: :likes, source: :user

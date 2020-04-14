@@ -1,12 +1,15 @@
-<h3><%= title %></h3>
-
+<h3>投稿一覧</h3>
 <% if posts.present? %>
-  <ul class="post-list" id="post-list">
-    <%= render 'posts/pagenate', posts: posts %>
-  </ul>
-  <%= link_to_next_page posts, 'つづきを見る', remote: true, id: 'more_link' unless posts.nil? %>
+    <div class="conteiner">
+        <div class="card-group mx-auto">
+          <div id="post_list" class="row">
+            <%= render 'posts/pagenate', posts: posts %>
+          </div>
+          <div class="text-center mt-2">
+            <%= link_to_next_page posts, 'つづきを見る', remote: true, id: 'more_link' unless posts.nil? %>
+          </div>
+        </div>
+    </div>
 <% else %>
-
-  <h4 class="tac">投稿が見つかりませんでした。</h4>
-  
+  <p class="mt-5">投稿がありません</p>
 <% end %>

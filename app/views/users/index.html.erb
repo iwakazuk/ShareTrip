@@ -1,3 +1,18 @@
-<%= render 'layouts/serch' %>
-<%= render  'profile', user: @user if @user %>
-<%= render 'list', users: @users, title: user_list_title %>
+ <div class=text-center>
+    <h1 class="font-weight-bold mb-5">ユーザー検索</h1>
+    <%= render 'layouts/search' %>
+    <% if @user.present? %>
+        <div class="conteiner">
+            <div class="card-group mx-auto">
+                <div id="user_list" class="row">
+                    <%= render partial: 'users/user', collection: @user %>
+                </div>
+                <div class="text-center">
+                    <%= link_to_next_page @user,"さらに表示",remote: true, params: { type: :user_list }, class: 'btn btn-warning btn-lg', id: 'view_more' %>
+                </div>
+            </div>
+        </div>
+    <% else %>
+        <p class="text-center mt-5">ユーザーが見つかりませんでした</p>
+    <% end %>
+</div>

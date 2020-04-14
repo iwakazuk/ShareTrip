@@ -1,30 +1,40 @@
-<div class="box form">
-  <h2>投稿フォーム</h2>
-
+<%= javascript_include_tag 'preview_js' %>
+<div>
+  <h2 class="font-weight-bold text-center">投稿フォーム</h2>
+  <div class="form-group mt-5">
   <%= render "layouts/error_message", object: @post %>
-
-  <div class="form-box">
-
   <%= form_for(@post, class: "form") do |f| %>
-    <%= f.text_field :title, placeholder: "タイトル" %>
-    <%= f.text_area :content, placeholder: "説明" %>
-    <%= f.text_field :tag_list, value: @post.tag_list.join(','), class: "form-control", placeholder: "タグ（カンマ区切り）" %>
-    <div class="file-image-con" id="drag-drop-area">
-      <p class="drag-drop-info">ここに画像ファイルをドロップ</p>
-    </div>
-    <p class="tac">または</p>
-    <div class="tac mt1">
-      <label for="file-image" class="file-image__label">
-        写真を選択
-        <%= f.file_field :images, class: "file-image", id: "file-image", multiple: true %>
+
+    <div class=text-center>      
+      <div>
+        <% if @post.image.present? %>
+          <%= image_tag post.image.url, id: :js_imgPrev, size:"600x450", class:"post-prev img-fluid" %>
+        <% else %>
+          <%= image_tag asset_path("defaultPicture.jpg"), id: :js_imgPrev, size:"300x450", class:"post-prev img-fluid" %>
+        <% end %>
+      </div>
+      <label for="js_presentImg" class="btn btn-warning"><span>画像を選択</span>
+        <%= f.file_field :image, id: :js_presentImg, autofocus: true, multiple: true,
+                                    class:"form-control-file", style: "display:none;" %>
       </label>
     </div>
-    <div id="preview" class="preview">
-      <p class="tac" id="preview-title">プレビュー</p>
-      <div id="preview-inner">
-      </div>
+    
+    <div class="form-group">
+      <label for="name">Title</label>
+      <%= f.text_field :title, placeholder: "タイトル", class:"form-control" %>
     </div>
-    <div class="actions">
+
+    <div class="form-group">
+      <label for="name">説明</label>
+      <%= f.text_area :content, placeholder: "説明", class:"form-control" %>
+    </div>
+
+    <div class="form-group">
+      <label for="name">タグ</label>
+      <%= f.text_field :tag_list, value: @post.tag_list.join(','),  placeholder: "タグ（カンマ区切り）", class: "form-control"%>
+    </div>
+
+    <div class="actions text-center">
       <%= f.submit "投稿", class: "btn btn-primary" %>
     </div>
   <% end %>

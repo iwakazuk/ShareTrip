@@ -1,9 +1,11 @@
 <div class="follow_form_<%= user.id %>">
- <% unless current_user?(user) || !(user_signed_in?) %>
-  <% if current_user.following?(user) %>
-    <%= render 'users/unfollow', user: user%>
-  <% else %>
-    <%= render 'users/follow', user: user %>
+  <% unless current_user?(user) || !(user_signed_in?) %>
+      <div id="js-followForm" class="mt-3">
+          <% if current_user.following?(user) %>
+              <%= render 'users/unfollow', user: user %>
+          <% else %>
+              <%= render 'users/follow', user: user %>
+          <% end %>
+      </div>
   <% end %>
-<% end %>  
 </div>

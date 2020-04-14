@@ -2,10 +2,16 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
+  process resize_to_fill: [700, 700, 'Center']
+  process convert: 'jpeg'
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
-  # storage :fog
+  if Rails.env.production?
+    storage :fog
+  else
+    storage :file
+  end
+  # storage :file
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -47,10 +53,6 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def extension_whitelist
     %w[jpg jpeg png]
-  end
-
-  def size_range
-    1..5.megabytes
   end
 
   version :thumb do

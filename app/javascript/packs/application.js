@@ -7,6 +7,20 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+require('jquery');
+require('bootstrap');
+require('bootstrap/dist/js/bootstrap.min.js')
+
+//プラグイン
+import 'bootstrap'
+import "@fontawesome/fontawesome-free/js/all";
+import 'popper.js/dist/umd/popper';
+
+// //scss
+// import 'src/stylesheets/application';
+
+// //Javascript
+// import 'src/javascripts/application';
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

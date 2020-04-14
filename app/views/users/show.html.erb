@@ -1,17 +1,7 @@
-<div class="user-container">
-<%= render 'profile', user: @user %>
-
-<% if @posts.present? %>
-  <%= render 'posts/list', title: nil, posts: @posts %>
-<% elsif current_user?(@user) %>
-<div class="non-post">
-  <h4 class="tac">
-  投稿がまだありません。<br>
-  最初の投稿をしてみましょう！
-  </h4>
-  <%= link_to "投稿する", new_post_path, class: "non-post__link" %>
+<div class="text-center">
+  <% @user ||= current_user %>
+    <%= image_tag @user.profile_image.url, size:"200x200", class:"avatar-type-circle" %>
+      <span class="personal-name ml-2"><span class="text-muted">@</span><%= @user.name %></span>
+    <%= render 'users/follow_form', user: @user %>
 </div>
-<% else %>
-  <h4 class="tac">投稿はまだありません</h4>
-<% end %>
-</div>
+<%= render'user_tabs', user: @user, posts: @posts %>

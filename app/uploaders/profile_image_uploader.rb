@@ -2,9 +2,15 @@ class ProfileImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
+  process resize_to_fill: [500, 500, 'Center']
+  process convert: 'jpg'
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
+  if Rails.env.production?
+    storage :fog
+  else
+    storage :file
+  end
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
@@ -48,7 +54,6 @@ class ProfileImageUploader < CarrierWave::Uploader::Base
   def default_url
     "user.png"
   end
-  process resize_to_fit: [300, 300]
 
   version :thumb do
     process resize_to_fit: [300, 300]

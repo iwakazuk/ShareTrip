@@ -1,0 +1,102 @@
+<ul class="nav nav-tabs justify-content-center">
+    <li class="nav-item">
+        <a data-toggle="tab" class="nav-link border-top-0 text-muted" href="#posts">投稿一覧</a>
+    </li>
+    <li class="nav-item">
+        <a data-toggle="tab" class="nav-link border-top-0 text-muted" href="#likes">お気に入り</a>
+    </li>
+    <li class="nav-item">
+        <a data-toggle="tab" class="nav-link border-top-0 text-muted" href="#following">フォロー</a>
+    </li>
+    <li class="nav-item">
+        <a data-toggle="tab" class="nav-link border-top-0 text-muted" href="#follower">フォロワー</a>
+    </li>
+    <% if current_user?(@user)%>
+        <li class="nav-item"> 
+            <%= link_to '設定', edit_user_registration_path, class:"nav-link border-top-0 text-muted"%>
+        </li>
+    <% end %>
+
+</ul>
+<div class="tab-content text-center">
+    <!--投稿一覧-->
+    <div id="posts" class="tab-pane active">
+        <%= render 'posts/list', title: nil, posts: posts %>         
+    </div>
+
+    <!--いいね-->
+    <div id="likes" class="tab-pane">
+      <% if user.liked_posts.any? %>
+        <div class="font-weight-bold text-muted">
+          <%= user.like_posts.count %><span class="font-weight-normal"> likes</span>
+        </div>
+        <div class="conteiner">
+            <div class="card-group mx-auto">
+                <div id="liking_list" class="row">
+                    <%= render partial: '/microposts/postcards', collection: user.liked_posts, as: "post" %>
+                </div>
+                <div class="text-center mt-2">
+                    <%= link_to_next_page user.liked_posts, 'さらに表示',remote: true, params: { type: :liking_list },id: 'view_more', class: 'btn btn-warning btn-lg' %>
+                </div>
+            </div>
+        </div>
+      <% else %>
+        <% if current_user?(user) %>
+            <p class="mt-5">まだいいねしていません。</p>
+            <p>あなたのお気に入りを探しにいきましょう！</p>
+            <%= render'/layouts/search' %>
+        <% else %>
+            <p class="mt-5">いいねした投稿はありません</p>
+        <% end %>
+      <% end %>
+    </div>
+
+    <!--フォロー-->
+    <div id="following" class="tab-pane">
+      <% if user.followings.any? %>
+        <div class="font-weight-bold text-muted">
+            <%= user.followings.count %><span class="font-weight-normal"> following</span>
+        </div>
+            <div class="conteiner">
+                <div class="card-group mx-auto">
+                    <div id="following_list" class="row">
+                        <%= render partial: 'user', collection: user.followings, as: "user" %>
+                    </div>
+                </div>
+            </div>
+      <% else %>
+          <% if current_user?(user) %>
+            <p class="mt-5">フォローしているユーザーはいません。</p>
+            <p>気の合う仲間を探してみましょう！</p>
+            <%= render'/layouts/search' %>
+          <% else %>
+            <p class="mt-5">フォローしているユーザーはいません</p>
+          <% end %>
+      <% end %>
+    </div>
+
+    <!--フォロワー-->
+    <div id="follower" class="tab-pane">
+      <% if user.followers.any? %>
+        <div class="font-weight-bold text-muted">
+          <%= user.followers.count %><span class="font-weight-normal"> followers</span>
+        </div>
+            <div class="conteiner">
+                <div class="card-group mx-auto">
+                    <div id="follower_list" class="row">
+                      <%= render partial: 'user', collection: user.followers, as: "user" %>
+                    </div>
+                    <div class="text-center mt-2">
+                      <%= link_to_next_page user.followers,'さらに表示', remote: true, params: { type: :follower_list }, id: 'view_more', class: 'btn btn-warning btn-lg' %>
+                    </div>
+                </div>
+            </div>
+      <% else %>
+          <% if current_user?(user) %>
+            <p class="mt-5">フォロワーはまだいないようです。</p>
+          <% else %>
+            <p class="mt-5">フォロワーはいません</p>
+          <% end %>
+      <% end %>
+    </div>
+</div>
