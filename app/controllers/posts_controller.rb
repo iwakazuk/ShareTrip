@@ -19,7 +19,6 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    current_user&.footprints&.create(post_id: @post.id)
     @like = Like.new
     @comment = Comment.new
     @comments = @post.comments
@@ -61,7 +60,7 @@ class PostsController < ApplicationController
     params.require(:post).permit(
       :title,
       :content,
-      { images: [] },
+      {image:[]},
       :tag_list
     )
   end
