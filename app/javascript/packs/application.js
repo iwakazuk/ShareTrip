@@ -13,7 +13,7 @@ require('bootstrap/dist/js/bootstrap.min.js')
 
 //プラグイン
 import 'bootstrap'
-import "@fontawesome/fontawesome-free/js/all";
+import "@fortawesome/fontawesome-free/js/all";
 import 'popper.js/dist/umd/popper';
 
 // //scss
