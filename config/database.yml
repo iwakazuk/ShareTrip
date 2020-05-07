@@ -29,7 +29,7 @@ test:
 
 production:
   <<: *default
-  database: sample
-  username: sample
-  password: sample
-  host:     sample
+  database: ShareTrip
+  username: root
+  password: password
+  host: sample
