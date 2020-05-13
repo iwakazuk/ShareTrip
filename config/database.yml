@@ -10,7 +10,6 @@ default: &default
   pool: 5
   username: root
   password: password
-  host:     db
 
 development:
   <<: *default
@@ -29,7 +28,6 @@ test:
 
 production:
   <<: *default
-  database: ShareTrip
+  database: sharetrip_production
   username: root
   password: password
-  host: sample
