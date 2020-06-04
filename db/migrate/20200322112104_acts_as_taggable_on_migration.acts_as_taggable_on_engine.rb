@@ -35,3 +35,4 @@ ActsAsTaggableOnMigration.class_eval do
     drop_table ActsAsTaggableOn.tags_table
   end
 end
+
