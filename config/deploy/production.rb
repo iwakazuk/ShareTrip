@@ -51,17 +51,16 @@
 # ------------------------------------
 set :stage, :production
 set :rails_env, 'production'
-
 set :branch, ENV['BRANCH_NAME'] || 'master'
 
 set :migration_role, 'db'
 server "18.182.112.30",
-  user: "iwakazuk",
+  user: "sharetrip",
   roles: %w{web app db},
   port: 22,
   ssh_options: {
-    user: "iwakazuk", # overrides user setting above
-    keys: %w(~/.ssh/iwakazuk-key-rsa),
+    user: "sharetrip", # overrides user setting above
+    keys: %w(~/.ssh/sharetrip_key_rsa),
     forward_agent: true,
     auth_methods: %w(publickey)
     # password: "please use keys"
