@@ -4,17 +4,13 @@ lock "~> 3.13.0"
 set :application, "ShareTrip"
 set :repo_url, "git@github.com:iwakazuk/ShareTrip.git"
 set :rbenv_ruby, '2.6.5'
-
 set :branch, 'master'
-
-set :deploy_to, "/var/www/rails/ahareTrip"
-
+set :deploy_to, "/var/www/rails/ShareTrip"
 set :format, :pretty
-
 set :pty, true
 
-append :linked_files, %w{config/database.yml config/master.key}
-append :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets public/system vendor/bundle}
+append :linked_files, 'config/database.yml', 'config/master.key'
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'tmp/backup' 'public/uploads'
 
 set :log_level, :debug
 
